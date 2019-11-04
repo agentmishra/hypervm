@@ -26,6 +26,10 @@
 ######
 
 clear
+
+
+start() {
+
 cat LICENSE | more
 echo "--------------------------------------------"
 echo "Do you agree this license? (press enter for yes, any other key + enter for no)"
@@ -36,8 +40,6 @@ else
 echo "Install aborted."
 exit;
 fi
-
-start() {
 
 	export PATH=/usr/sbin:/sbin:$PATH
 
