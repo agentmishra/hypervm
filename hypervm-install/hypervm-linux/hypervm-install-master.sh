@@ -24,9 +24,18 @@
 # Author dterweij
 #
 ######
+
 clear
-cat LICENSE
+cat LICENSE | more
 echo "--------------------------------------------"
+echo "Do you agree this license? (press enter for yes, any other key + enter for no)"
+read -s AGREE
+if [ -z $AGREE ]; then
+echo "Proceed installation"
+else
+echo "Install aborted."
+exit;
+fi
 
 start() {
 
@@ -40,11 +49,17 @@ if ! [ -f /usr/bin/yum ] ; then
 fi
 #
 if [ -f /usr/bin/yum ] ; then
-	echo Installing some packages with yum
+	echo Installing some packages with yum...
+	yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+	yum -y install yum-utils
+	yum-config-manager --enable remi-php74
 	yum -y install php wget zip unzip 
-else 
-	echo Installing some packages with up2date
-	up2date --nox --nosig php wget zip unzip
+else
+	echo "yum not found, kindly install yum then proceed"
+#else 
+#	echo Installing some packages with up2date
+#	up2date --nox --nosig php wget zip unzip
 fi
 #
 	echo Checking if php is installed
